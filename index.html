@@ -282,7 +282,7 @@
       <table class="pain">
         <tr><th>The job</th><th>Handled alone</th><th>With the kit</th></tr>
         <tr><td>Menu bar app shell</td><td class="no">No Xcode template exists; tutorials are outdated, LLMs suggest deprecated APIs</td><td class="yes">Working skeleton, macOS 13+</td></tr>
-        <tr><td>Notarization</td><td class="no">Certificates, entitlements, cryptic failures, forum archaeology</td><td class="yes">One script, readable errors</td></tr>
+        <tr><td>Notarization</td><td class="no">Xcode notarises the <em>app</em>. The DMG you actually ship is a separate submission — and every release repeats the GUI by hand</td><td class="yes">One script, both submissions, signature flags checked before the round-trip</td></tr>
         <tr><td>DMG packaging</td><td class="no">hdiutil incantations; the DMG itself must be notarized too — most guides skip that</td><td class="yes">Signed, notarized, stapled</td></tr>
         <tr><td>Auto-updates</td><td class="no">Sparkle setup, EdDSA keys, appcast hosting, three silent failure modes</td><td class="yes">Wired, with delta updates</td></tr>
         <tr><td>License keys</td><td class="no">Verification API, offline handling, refund handling, keychain storage</td><td class="yes">Gumroad flow, 14-day grace</td></tr>
