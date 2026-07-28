@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0A0C">
 <meta name="description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hawser — sell your Mac app outside the App Store">
@@ -10,52 +12,24 @@
 <title>Hawser — sell your Mac app outside the App Store</title>
 <style>
   :root {
-    --bg: #F5F5F7;
-    --ink: #1D1D1F;
-    --muted: #6E6E73;
-    --hairline: rgba(0, 0, 0, .12);
-    --glass: rgba(255, 255, 255, .58);
-    --glass-border: rgba(255, 255, 255, .75);
-    --accent: #0071E3;
-    --accent-ink: #FFFFFF;
-    --good: #248A3D;
-    --glow-a: rgba(10, 132, 255, .18);
-    --glow-b: rgba(90, 200, 250, .16);
-    --term-bg: rgba(22, 24, 31, .92);
-    --term-ink: #E8E8ED;
-    --term-dim: #7D7F88;
-    --shadow: 0 20px 50px -20px rgba(0, 0, 0, .25);
+    --bg: #0A0A0C;
+    --bg-soft: #101014;
+    --ink: #F2F1EE;
+    --muted: #9C978F;
+    --hairline: rgba(255,255,255,.10);
+    --glass: rgba(255,255,255,.045);
+    --glass-border: rgba(255,255,255,.10);
+    --accent: #E4A244;
+    --accent-ink: #1A1206;
+    --good: #30D158;
+    --glow-a: rgba(228,162,68,.15);
+    --glow-b: rgba(150,90,30,.11);
+    --term-bg: #131317;
+    --term-ink: #E6E3DD;
+    --term-dim: #7E7A73;
+    --shadow: 0 24px 60px -24px rgba(0,0,0,.8);
     --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
     --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #060608; --ink: #F5F5F7; --muted: #98989D;
-      --hairline: rgba(255, 255, 255, .14);
-      --glass: rgba(255, 255, 255, .065); --glass-border: rgba(255, 255, 255, .14);
-      --accent: #0A84FF; --accent-ink: #FFFFFF; --good: #30D158;
-      --glow-a: rgba(10, 132, 255, .22); --glow-b: rgba(94, 92, 230, .16);
-      --term-bg: rgba(18, 20, 26, .88); --term-ink: #E8E8ED; --term-dim: #7D7F88;
-      --shadow: 0 24px 60px -24px rgba(0, 0, 0, .8);
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #060608; --ink: #F5F5F7; --muted: #98989D;
-    --hairline: rgba(255, 255, 255, .14);
-    --glass: rgba(255, 255, 255, .065); --glass-border: rgba(255, 255, 255, .14);
-    --accent: #0A84FF; --accent-ink: #FFFFFF; --good: #30D158;
-    --glow-a: rgba(10, 132, 255, .22); --glow-b: rgba(94, 92, 230, .16);
-    --term-bg: rgba(18, 20, 26, .88); --term-ink: #E8E8ED; --term-dim: #7D7F88;
-    --shadow: 0 24px 60px -24px rgba(0, 0, 0, .8);
-  }
-  :root[data-theme="light"] {
-    --bg: #F5F5F7; --ink: #1D1D1F; --muted: #6E6E73;
-    --hairline: rgba(0, 0, 0, .12);
-    --glass: rgba(255, 255, 255, .58); --glass-border: rgba(255, 255, 255, .75);
-    --accent: #0071E3; --accent-ink: #FFFFFF; --good: #248A3D;
-    --glow-a: rgba(10, 132, 255, .18); --glow-b: rgba(90, 200, 250, .16);
-    --term-bg: rgba(22, 24, 31, .92); --term-ink: #E8E8ED; --term-dim: #7D7F88;
-    --shadow: 0 20px 50px -20px rgba(0, 0, 0, .25);
   }
 
   * { box-sizing: border-box; }
@@ -86,7 +60,16 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 12px 22px; margin-top: 14px;
   }
-  .brand { font-weight: 700; font-size: 16px; letter-spacing: -.01em; }
+  .mark { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+  .mark img { width: 30px; height: 30px; border-radius: 7px; display: block; }
+  .mark .name { font-size: 15px; font-weight: 650; letter-spacing: .085em; text-transform: uppercase; line-height: 1; }
+  .mark .tag { display: block; font-size: 10.5px; font-weight: 500; letter-spacing: .055em;
+               text-transform: uppercase; color: var(--muted); margin-top: 4px; line-height: 1; }
+  nav .spacer { flex: 1; }
+  .navbtn { font-size: 13.5px; font-weight: 600; color: var(--accent); text-decoration: none;
+            border: 1px solid rgba(228,162,68,.34); border-radius: 980px; padding: 7px 15px; white-space: nowrap; }
+  .navbtn:hover { background: rgba(228,162,68,.10); }
+  @media (max-width: 520px) { .mark .tag { display: none; } }
   .nav-price { font-size: 14px; color: var(--muted); }
 
   /* ---------- hero ---------- */
@@ -135,7 +118,7 @@
   }
   .term-body .d { color: var(--term-dim); }
   .term-body .g { color: #32D74B; }
-  .term-body .o { color: #FFD60A; font-weight: 700; }
+  .term-body .o { color: #E4A244; font-weight: 700; }
   .cursor {
     display: inline-block; width: .6em; height: 1.1em; background: var(--term-ink);
     vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite;
@@ -187,7 +170,7 @@
   .stat b {
     font-size: 40px; font-weight: 700; letter-spacing: -.03em;
     display: block; margin-bottom: 8px; font-variant-numeric: tabular-nums;
-    background: linear-gradient(120deg, var(--accent), #64D2FF);
+    background: linear-gradient(120deg, #F2B45C, #C07E2A);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .stat span { color: var(--muted); font-size: 14.5px; line-height: 1.5; display: block; }
@@ -254,8 +237,15 @@
 
 <div class="wrap">
   <nav class="glass">
-    <div class="brand">Hawser</div>
-    <span class="nav-cta">$99 · one-time</span>
+    <a class="mark" href="./">
+      <img src="data:image/png;base64,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" alt="">
+      <span>
+        <span class="name">Hawser</span>
+        <span class="tag">Ship outside the App Store</span>
+      </span>
+    </a>
+    <span class="spacer"></span>
+    <a class="navbtn" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser — $99</a>
   </nav>
 
   <div class="hero">
@@ -354,6 +344,7 @@ docs/
         <p><code>errSecInternalComponent</code> is codesign's way of saying "keychain permissions" — it just never mentions keychains, or permissions. You get the one-line fix in the error message itself, when it happens, not after two hours of searching.</p>
       </div>
     </div>
+    <p class="kicker" style="margin-top:26px"><a href="traps.html" style="color:var(--accent)">Read all ten, with the exact fix for each →</a></p>
   </div>
 </section>
 
