@@ -96,6 +96,12 @@
   .cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
   .cta-note { font-size: 14px; color: var(--muted); text-align: left; }
 
+  .tour {
+    display: block; width: 100%; max-width: 900px; margin: 0 auto;
+    border-radius: 16px; border: 1px solid var(--hairline);
+    box-shadow: var(--shadow); background: #000;
+  }
+
   /* ---------- terminal as product shot ---------- */
   .stage { padding: 46px 0 90px; position: relative; }
   .term {
@@ -259,11 +265,12 @@
   </div>
 
   <div class="stage">
-    <div class="term" aria-label="Terminal showing ship.sh output">
-      <div class="term-bar"><span></span><span></span><span></span></div>
-      <pre class="term-body" id="term"><span class="d">$</span> ./scripts/ship.sh</pre>
-    </div>
-    <p class="stage-caption">ship.sh — a real, measured run. Not a mockup.</p>
+    <video class="tour" controls preload="metadata" playsinline
+           poster="hawser-tour-poster.jpg" aria-label="Hawser product tour">
+      <source src="hawser-tour.mp4" type="video/mp4">
+    </video>
+    <p class="stage-caption">Certificate to notarised DMG — the full run, in order.<br>
+       The log is the tool's own output, word for word.</p>
   </div>
 </div>
 
@@ -401,59 +408,6 @@ docs/
   <div>No watermark · no subscription · no telemetry.</div>
 </footer>
 
-<script>
-(function () {
-  var lines = [
-    ["", ""],
-    ["▶ Preflight checks", ""],
-    ["  ✓ App: MyApp", "g"],
-    ["  ✓ Signing identity found", "g"],
-    ["  ✓ Notary API key found", "g"],
-    ["", ""],
-    ["▶ Building Release (universal)", ""],
-    ["  ✓ Built MyApp.app  arm64 + x86_64", "g"],
-    ["", ""],
-    ["▶ Signing (Developer ID + Hardened Runtime)", ""],
-    ["  ✓ Signature verified: runtime + timestamp", "g"],
-    ["", ""],
-    ["▶ Notarizing", ""],
-    ["  status: Accepted", "g"],
-    ["  ✓ Stapled", "g"],
-    ["", ""],
-    ["▶ Packaging DMG (notarized + stapled)", ""],
-    ["▶ Gatekeeper verification", ""],
-    ["  ✓ Gatekeeper: accepted", "g"],
-    ["", ""],
-    ["🚢 Done: dist/MyApp.dmg is ready to distribute.", "o"]
-  ];
-  var term = document.getElementById("term");
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function render(upTo, withCursor) {
-    var html = '<span class="d">$</span> ./scripts/ship.sh';
-    for (var i = 0; i < upTo; i++) {
-      var cls = lines[i][1];
-      var text = lines[i][0].replace(/&/g, "&amp;").replace(/</g, "&lt;");
-      html += "\n" + (cls ? '<span class="' + cls + '">' + text + "</span>" : text);
-    }
-    if (withCursor) html += '\n<span class="cursor"></span>';
-    term.innerHTML = html;
-  }
-
-  if (reduced) { render(lines.length, false); return; }
-
-  var i = 0;
-  function tick() {
-    i++;
-    render(i, i < lines.length);
-    if (i < lines.length) {
-      var delay = lines[i - 1][0] === "" ? 60 : (lines[i - 1][0].indexOf("▶") === 0 ? 340 : 170);
-      if (lines[i - 1][0].indexOf("Notarizing") !== -1) delay = 700;
-      setTimeout(tick, delay);
-    }
-  }
-  setTimeout(tick, 600);
-})();
-</script>
 </body>
 </html>
