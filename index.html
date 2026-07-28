@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hawser — sell your Mac app outside the App Store">
+<meta property="og:description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
+<title>Hawser — sell your Mac app outside the App Store</title>
+<style>
+  :root {
+    --bg: #F5F5F7;
+    --ink: #1D1D1F;
+    --muted: #6E6E73;
+    --hairline: rgba(0, 0, 0, .12);
+    --glass: rgba(255, 255, 255, .58);
+    --glass-border: rgba(255, 255, 255, .75);
+    --accent: #0071E3;
+    --accent-ink: #FFFFFF;
+    --good: #248A3D;
+    --glow-a: rgba(10, 132, 255, .18);
+    --glow-b: rgba(90, 200, 250, .16);
+    --term-bg: rgba(22, 24, 31, .92);
+    --term-ink: #E8E8ED;
+    --term-dim: #7D7F88;
+    --shadow: 0 20px 50px -20px rgba(0, 0, 0, .25);
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #060608; --ink: #F5F5F7; --muted: #98989D;
+      --hairline: rgba(255, 255, 255, .14);
+      --glass: rgba(255, 255, 255, .065); --glass-border: rgba(255, 255, 255, .14);
+      --accent: #0A84FF; --accent-ink: #FFFFFF; --good: #30D158;
+      --glow-a: rgba(10, 132, 255, .22); --glow-b: rgba(94, 92, 230, .16);
+      --term-bg: rgba(18, 20, 26, .88); --term-ink: #E8E8ED; --term-dim: #7D7F88;
+      --shadow: 0 24px 60px -24px rgba(0, 0, 0, .8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #060608; --ink: #F5F5F7; --muted: #98989D;
+    --hairline: rgba(255, 255, 255, .14);
+    --glass: rgba(255, 255, 255, .065); --glass-border: rgba(255, 255, 255, .14);
+    --accent: #0A84FF; --accent-ink: #FFFFFF; --good: #30D158;
+    --glow-a: rgba(10, 132, 255, .22); --glow-b: rgba(94, 92, 230, .16);
+    --term-bg: rgba(18, 20, 26, .88); --term-ink: #E8E8ED; --term-dim: #7D7F88;
+    --shadow: 0 24px 60px -24px rgba(0, 0, 0, .8);
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F5F7; --ink: #1D1D1F; --muted: #6E6E73;
+    --hairline: rgba(0, 0, 0, .12);
+    --glass: rgba(255, 255, 255, .58); --glass-border: rgba(255, 255, 255, .75);
+    --accent: #0071E3; --accent-ink: #FFFFFF; --good: #248A3D;
+    --glow-a: rgba(10, 132, 255, .18); --glow-b: rgba(90, 200, 250, .16);
+    --term-bg: rgba(22, 24, 31, .92); --term-ink: #E8E8ED; --term-dim: #7D7F88;
+    --shadow: 0 20px 50px -20px rgba(0, 0, 0, .25);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); line-height: 1.55; font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; position: relative; }
+
+  /* ambient glow behind the glass */
+  .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .ambient i { position: absolute; border-radius: 50%; filter: blur(90px); }
+  .ambient .a { width: 640px; height: 640px; top: -220px; left: 50%; transform: translateX(-70%); background: var(--glow-a); }
+  .ambient .b { width: 520px; height: 520px; top: 60px; left: 55%; background: var(--glow-b); }
+
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(22px) saturate(1.7);
+    backdrop-filter: blur(22px) saturate(1.7);
+    border: 1px solid var(--glass-border);
+    border-radius: 22px;
+  }
+
+  /* ---------- nav ---------- */
+  nav {
+    position: sticky; top: 14px; z-index: 10;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 22px; margin-top: 14px;
+  }
+  .brand { font-weight: 700; font-size: 16px; letter-spacing: -.01em; }
+  .nav-price { font-size: 14px; color: var(--muted); }
+
+  /* ---------- hero ---------- */
+  .hero { text-align: center; padding: 84px 0 30px; }
+  .eyebrow {
+    font-size: 14px; font-weight: 600; letter-spacing: .01em;
+    color: var(--accent); margin: 0 0 14px;
+  }
+  h1 {
+    font-size: clamp(38px, 6.4vw, 64px); font-weight: 700;
+    letter-spacing: -.028em; line-height: 1.06; margin: 0 auto 20px;
+    max-width: 17ch; text-wrap: balance;
+  }
+  .sub {
+    color: var(--muted); font-size: clamp(18px, 2.4vw, 21px);
+    margin: 0 auto 32px; max-width: 44ch; text-wrap: balance;
+  }
+  .cta-row { display: flex; gap: 14px; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .cta {
+    display: inline-block; background: var(--accent); color: var(--accent-ink);
+    font-size: 17px; font-weight: 600; padding: 13px 28px; border-radius: 980px;
+    text-decoration: none; cursor: default;
+  }
+  .cta:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+  .cta-note { font-size: 14px; color: var(--muted); text-align: left; }
+
+  /* ---------- terminal as product shot ---------- */
+  .stage { padding: 46px 0 90px; position: relative; }
+  .term {
+    max-width: 720px; margin: 0 auto;
+    background: var(--term-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    backdrop-filter: blur(24px) saturate(1.6);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .term-bar { display: flex; gap: 8px; padding: 13px 16px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .term-bar span { width: 12px; height: 12px; border-radius: 50%; }
+  .term-bar span:nth-child(1) { background: #FF5F57; }
+  .term-bar span:nth-child(2) { background: #FEBC2E; }
+  .term-bar span:nth-child(3) { background: #28C840; }
+  .term-body {
+    font-family: var(--mono); font-size: 13px; line-height: 1.75;
+    color: var(--term-ink); padding: 18px 22px 24px; margin: 0;
+    overflow-x: auto; min-height: 22em; white-space: pre; text-align: left;
+  }
+  .term-body .d { color: var(--term-dim); }
+  .term-body .g { color: #32D74B; }
+  .term-body .o { color: #FFD60A; font-weight: 700; }
+  .cursor {
+    display: inline-block; width: .6em; height: 1.1em; background: var(--term-ink);
+    vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+  .stage-caption { text-align: center; color: var(--muted); font-size: 13px; margin-top: 16px; }
+
+  /* ---------- sections ---------- */
+  section { padding: 72px 0; }
+  h2 {
+    font-size: clamp(28px, 4vw, 40px); font-weight: 700; letter-spacing: -.022em;
+    line-height: 1.12; margin: 0 0 10px; text-wrap: balance;
+  }
+  .kicker { color: var(--muted); font-size: 18px; margin: 0 0 40px; max-width: 60ch; }
+  .center h2, .center .kicker { margin-left: auto; margin-right: auto; text-align: center; }
+
+  /* five jobs table */
+  .table-card { padding: 8px 26px; overflow-x: auto; }
+  .pain { width: 100%; border-collapse: collapse; font-size: 15.5px; min-width: 640px; }
+  .pain th, .pain td { text-align: left; padding: 15px 16px 15px 0; vertical-align: top; }
+  .pain th {
+    font-size: 12px; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--hairline);
+  }
+  .pain td { border-bottom: 1px solid var(--hairline); }
+  .pain tr:last-child td { border-bottom: none; }
+  .pain td:first-child { font-weight: 600; white-space: nowrap; }
+  .pain .no { color: var(--muted); }
+  .pain .yes { color: var(--good); font-weight: 600; }
+
+  /* inside */
+  .inside { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; }
+  @media (max-width: 880px) { .inside { grid-template-columns: 1fr; } }
+  .tree {
+    font-family: var(--mono); font-size: 13px; line-height: 1.8;
+    padding: 22px 24px; margin: 0; overflow-x: auto; white-space: pre;
+  }
+  .tree .c { color: var(--muted); }
+  .tree .hl { color: var(--accent); font-weight: 700; }
+  .inside-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+  .inside-list strong { font-size: 16px; display: block; margin-bottom: 3px; letter-spacing: -.01em; }
+  .inside-list strong code { font-family: var(--mono); font-size: 14.5px; }
+  .inside-list span { color: var(--muted); font-size: 15.5px; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+  .stat { padding: 28px 26px; }
+  .stat b {
+    font-size: 40px; font-weight: 700; letter-spacing: -.03em;
+    display: block; margin-bottom: 8px; font-variant-numeric: tabular-nums;
+    background: linear-gradient(120deg, var(--accent), #64D2FF);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .stat span { color: var(--muted); font-size: 14.5px; line-height: 1.5; display: block; }
+  .measured { text-align: center; color: var(--muted); font-size: 13px; margin-top: 22px; }
+
+  /* traps */
+  .traps { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; }
+  .trap { padding: 26px; }
+  .trap h3 { font-size: 17px; font-weight: 600; letter-spacing: -.01em; margin: 0 0 10px; line-height: 1.35; }
+  .trap p { margin: 0; color: var(--muted); font-size: 15px; }
+  .trap code {
+    font-family: var(--mono); font-size: 12.5px;
+    background: rgba(120, 120, 128, .16); border-radius: 5px; padding: 2px 6px;
+  }
+
+  /* pricing */
+  .price-box {
+    max-width: 640px; margin: 0 auto; padding: 44px 40px; text-align: center;
+  }
+  .price-big { font-size: 56px; font-weight: 700; letter-spacing: -.03em; margin: 0 0 2px; }
+  .price-big small { font-size: 17px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+  .price-points {
+    list-style: none; margin: 18px auto 30px; padding: 0;
+    color: var(--muted); font-size: 15.5px; max-width: 40ch; text-align: left;
+  }
+  .price-points li { padding-left: 26px; position: relative; margin-bottom: 8px; }
+  .price-points li::before { content: "✓"; position: absolute; left: 0; color: var(--good); font-weight: 700; }
+
+  /* faq */
+  .faq { max-width: 680px; margin: 0 auto; }
+  .faq details { border-top: 1px solid var(--hairline); }
+  .faq details:last-child { border-bottom: 1px solid var(--hairline); }
+  .faq summary {
+    cursor: pointer; list-style: none; display: flex; justify-content: space-between;
+    align-items: center; gap: 16px; padding: 18px 4px; font-weight: 600; font-size: 16.5px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: "+"; font-size: 22px; font-weight: 400; color: var(--muted);
+    transition: transform .18s ease; line-height: 1;
+  }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  @media (prefers-reduced-motion: reduce) { .faq summary::after { transition: none; } }
+  .faq .a { color: var(--muted); font-size: 15.5px; padding: 0 4px 20px; max-width: 60ch; }
+  .faq .a code { font-family: var(--mono); font-size: 13px; background: rgba(120,120,128,.16); border-radius: 5px; padding: 1px 5px; }
+
+  .price-diff { font-size: 17px; font-weight: 600; letter-spacing: -.01em; margin: 0 0 18px; }
+  .price-note { font-size: 13px; color: var(--muted); margin: 18px auto 0; max-width: 44ch; }
+
+  .nav-cta {
+    font-size: 14px; font-weight: 600; color: var(--accent);
+    border: 1px solid var(--accent); border-radius: 980px; padding: 6px 14px;
+  }
+
+  footer {
+    padding: 40px 0 56px; text-align: center; color: var(--muted); font-size: 14px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true"><i class="a"></i><i class="b"></i></div>
+
+<div class="wrap">
+  <nav class="glass">
+    <div class="brand">Hawser</div>
+    <span class="nav-cta">$99 · one-time</span>
+  </nav>
+
+  <div class="hero">
+    <p class="eyebrow">For Mac developers selling outside the App Store</p>
+    <h1>Everything Apple doesn't do for you. Done.</h1>
+    <p class="sub">Point it at the Mac app you already have — or start from the included skeleton — and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.</p>
+    <div class="cta-row">
+      <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser — $99</a>
+      <span class="cta-note">One-time purchase.<br>Use in unlimited apps.</span>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="term" aria-label="Terminal showing ship.sh output">
+      <div class="term-bar"><span></span><span></span><span></span></div>
+      <pre class="term-body" id="term"><span class="d">$</span> ./scripts/ship.sh</pre>
+    </div>
+    <p class="stage-caption">ship.sh — a real, measured run. Not a mockup.</p>
+  </div>
+</div>
+
+<section>
+  <div class="wrap center">
+    <h2>The App Store does five jobs.<br>Out here, they're yours.</h2>
+    <p class="kicker">Sell from your own site and you keep 100% minus payment fees, own your customers, and escape the sandbox. In exchange, Apple hands you this list — and no tooling.</p>
+    <div class="glass table-card">
+      <table class="pain">
+        <tr><th>The job</th><th>Handled alone</th><th>With the kit</th></tr>
+        <tr><td>Menu bar app shell</td><td class="no">No Xcode template exists; tutorials are outdated, LLMs suggest deprecated APIs</td><td class="yes">Working skeleton, macOS 13+</td></tr>
+        <tr><td>Notarization</td><td class="no">Certificates, entitlements, cryptic failures, forum archaeology</td><td class="yes">One script, readable errors</td></tr>
+        <tr><td>DMG packaging</td><td class="no">hdiutil incantations; the DMG itself must be notarized too — most guides skip that</td><td class="yes">Signed, notarized, stapled</td></tr>
+        <tr><td>Auto-updates</td><td class="no">Sparkle setup, EdDSA keys, appcast hosting, three silent failure modes</td><td class="yes">Wired, with delta updates</td></tr>
+        <tr><td>License keys</td><td class="no">Verification API, offline handling, refund handling, keychain storage</td><td class="yes">Gumroad flow, 14-day grace</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap inside">
+    <div>
+      <h2>What's in the box</h2>
+      <ul class="inside-list">
+        <li><strong>The Hawser app</strong><span>Unlocks your kit, reads your Developer ID out of the keychain, takes the notary key from a file dialog, and writes the config for you. No text editor required to get shipping.</span></li>
+        <li><strong><code>Config.xcconfig</code></strong><span>The one file you edit. Name, bundle id, team, versions, update feed, product id — everything follows it.</span></li>
+        <li><strong><code>ship.sh</code></strong><span>Build → sign → notarize → staple → DMG. Verifies its own signature flags before wasting a round-trip to Apple, and refuses to ship what would silently fail.</span></li>
+        <li><strong><code>appcast.sh</code></strong><span>Generates your signed update feed — and rejects an unsigned one, a failure Sparkle's own tooling lets through without a word.</span></li>
+        <li><strong>Five guides</strong><span>Written from measured runs, not documentation folklore. The troubleshooting page is real incidents with exact fixes.</span></li>
+      </ul>
+    </div>
+    <pre class="glass tree"><span class="c"># you edit one file:</span>
+<span class="hl">Config.xcconfig</span>
+ShipKit.xcodeproj
+Sources/
+  ExampleFeatureView  <span class="c">← your app goes here</span>
+  SettingsView        <span class="c">launch-at-login, tabs</span>
+  UpdaterView         <span class="c">Sparkle wired</span>
+  License*            <span class="c">Gumroad + grace period</span>
+scripts/
+  <span class="hl">ship.sh</span>             <span class="c">one command → DMG</span>
+  appcast.sh          <span class="c">signed update feed</span>
+docs/
+  01-quickstart … 05-troubleshooting</pre>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <h2>Honest numbers</h2>
+    <p class="kicker">Every claim on this page was measured on a real machine on a real Apple Developer account, the day this kit's pipeline first ran.</p>
+    <div class="stats">
+      <div class="glass stat"><b>62s</b><span>full pipeline, warm run: from source to distributable, notarized DMG</span></div>
+      <div class="glass stat"><b>31m → 40s</b><span>your first-ever notarization vs. every one after. First-run panic, documented away</span></div>
+      <div class="glass stat"><b>2.5 KB</b><span>delta update our test shipped instead of the full 1.1 MB — automatic, zero config</span></div>
+      <div class="glass stat"><b>10</b><span>documented traps we hit while building this, each with its exact fix</span></div>
+    </div>
+    <p class="measured">Measured 2026 — not projected, not "up to".</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <h2>We fell in the holes so you don't</h2>
+    <p class="kicker">Three of the ten. Any one of these costs a lost afternoon — or worse, ships broken silently.</p>
+    <div class="traps">
+      <div class="glass trap">
+        <h3>The default that expires your certificate</h3>
+        <p>Apple's certificate page pre-selects "Previous Sub-CA". Accept it and your Developer ID dies in <strong>February 2027</strong> no matter what the expiry says. The guide walks you past it; <code>ship.sh</code>'s error text warns about it too.</p>
+      </div>
+      <div class="glass trap">
+        <h3>The update feed that signs nothing</h3>
+        <p>Add Sparkle after your first release and its own tool generates an <strong>unsigned feed with no warning</strong> — updates then fail silently on every user's machine. <code>appcast.sh</code> verifies the signature and refuses to let it through.</p>
+      </div>
+      <div class="glass trap">
+        <h3>The error that names nothing</h3>
+        <p><code>errSecInternalComponent</code> is codesign's way of saying "keychain permissions" — it just never mentions keychains, or permissions. You get the one-line fix in the error message itself, when it happens, not after two hours of searching.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="glass price-box">
+      <p class="price-diff">One file to configure. One command to ship. Every trap already documented.</p>
+      <p class="price-big">$99 <small>one-time</small></p>
+      <ul class="price-points">
+        <li>Use in unlimited apps, commercial or free</li>
+        <li>No subscription, no per-app fees, no account</li>
+        <li>Full source — readable, commented, yours to modify</li>
+      </ul>
+      <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser — $99</a>
+      <p class="price-note">Requires Apple's own Developer Program membership ($99/year, paid to Apple) — everyone shipping Mac apps pays that, kit or not.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap center">
+    <h2>Questions, answered straight</h2>
+    <div class="faq">
+      <details>
+        <summary>What exactly do I get?</summary>
+        <div class="a">The <strong>Hawser app</strong>. Paste the licence key from your receipt and it unpacks your kit — an Xcode project (the menu bar skeleton), <code>ship.sh</code> and <code>appcast.sh</code>, and five guides — then walks you through the certificate and notary setup. Full readable source, no obfuscation. The key is checked once, when you unlock; your copy is stamped with your name and the app never phones home again.</div>
+      </details>
+      <details>
+        <summary>What else do I need?</summary>
+        <div class="a">An Apple Developer Program membership ($99/year, paid to Apple — required for Developer ID signing no matter what tooling you use), Xcode 15 or later, and a Gumroad account only if you want license keys.</div>
+      </details>
+      <details>
+        <summary>Which platforms and versions?</summary>
+        <div class="a">Swift + SwiftUI. Your app targets macOS 13 Ventura or later and builds universal (Apple Silicon + Intel) out of the box. Updates use Sparkle 2.</div>
+      </details>
+      <details>
+        <summary>Can I use it in client work? In several apps?</summary>
+        <div class="a">Yes — unlimited apps, commercial or free, including apps you build for clients. The only thing you can't do is resell or redistribute the kit itself.</div>
+      </details>
+      <details>
+        <summary>Do I get updates to the kit?</summary>
+        <div class="a">Yes. Fixes and improvements to v1 are free and delivered through your original download link.</div>
+      </details>
+      <details>
+        <summary>Can I get a refund?</summary>
+        <div class="a">No — for the honest reason: you receive the complete source the moment you buy, and source code can't be returned. That's exactly why everything is laid out before you pay — the full box contents, measured numbers instead of promises, and this FAQ. If you're unsure, don't buy yet; the page isn't going anywhere.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div>Built by Yaveez — a studio that ships one-time-purchase Mac &amp; iOS apps.</div>
+  <div>No watermark · no subscription · no telemetry.</div>
+</footer>
+
+<script>
+(function () {
+  var lines = [
+    ["", ""],
+    ["▶ Preflight checks", ""],
+    ["  ✓ App: MyApp", "g"],
+    ["  ✓ Signing identity found", "g"],
+    ["  ✓ Notary API key found", "g"],
+    ["", ""],
+    ["▶ Building Release (universal)", ""],
+    ["  ✓ Built MyApp.app  arm64 + x86_64", "g"],
+    ["", ""],
+    ["▶ Signing (Developer ID + Hardened Runtime)", ""],
+    ["  ✓ Signature verified: runtime + timestamp", "g"],
+    ["", ""],
+    ["▶ Notarizing", ""],
+    ["  status: Accepted", "g"],
+    ["  ✓ Stapled", "g"],
+    ["", ""],
+    ["▶ Packaging DMG (notarized + stapled)", ""],
+    ["▶ Gatekeeper verification", ""],
+    ["  ✓ Gatekeeper: accepted", "g"],
+    ["", ""],
+    ["🚢 Done: dist/MyApp.dmg is ready to distribute.", "o"]
+  ];
+  var term = document.getElementById("term");
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function render(upTo, withCursor) {
+    var html = '<span class="d">$</span> ./scripts/ship.sh';
+    for (var i = 0; i < upTo; i++) {
+      var cls = lines[i][1];
+      var text = lines[i][0].replace(/&/g, "&amp;").replace(/</g, "&lt;");
+      html += "\n" + (cls ? '<span class="' + cls + '">' + text + "</span>" : text);
+    }
+    if (withCursor) html += '\n<span class="cursor"></span>';
+    term.innerHTML = html;
+  }
+
+  if (reduced) { render(lines.length, false); return; }
+
+  var i = 0;
+  function tick() {
+    i++;
+    render(i, i < lines.length);
+    if (i < lines.length) {
+      var delay = lines[i - 1][0] === "" ? 60 : (lines[i - 1][0].indexOf("▶") === 0 ? 340 : 170);
+      if (lines[i - 1][0].indexOf("Notarizing") !== -1) delay = 700;
+      setTimeout(tick, delay);
+    }
+  }
+  setTimeout(tick, 600);
+})();
+</script>
+</body>
+</html>
