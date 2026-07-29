@@ -12,17 +12,17 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Hawser">
 <meta property="og:url" content="https://hawserkit.com/">
-<meta property="og:title" content="Hawser — sell your Mac app outside the App Store">
+<meta property="og:title" content="Hawser: sell your Mac app outside the App Store">
 <meta property="og:description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
 <meta property="og:image" content="https://hawserkit.com/hawser-og.png">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="900">
-<meta property="og:image:alt" content="Hawser — ship your Mac app outside the App Store: signed, notarized, auto-updating, licensed. $99 one-time.">
+<meta property="og:image:alt" content="Hawser: ship your Mac app outside the App Store. Signed, notarized, auto-updating, licensed. $99 one-time.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hawser — sell your Mac app outside the App Store">
+<meta name="twitter:title" content="Hawser: sell your Mac app outside the App Store">
 <meta name="twitter:description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
 <meta name="twitter:image" content="https://hawserkit.com/hawser-og.png">
-<title>Hawser — sell your Mac app outside the App Store</title>
+<title>Hawser: sell your Mac app outside the App Store</title>
 <style>
   :root {
     --bg: #0A0A0C;
@@ -265,15 +265,15 @@
       </span>
     </a>
     <span class="spacer"></span>
-    <a class="navbtn" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser — $99</a>
+    <a class="navbtn" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser · $99</a>
   </nav>
 
   <div class="hero">
     <p class="eyebrow">For Mac developers selling outside the App Store</p>
     <h1>Everything Apple doesn't do for you. Done.</h1>
-    <p class="sub">Point it at the Mac app you already have — or start from the included skeleton — and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.</p>
+    <p class="sub">Point it at the Mac app you already have, or start from the included skeleton, and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.</p>
     <div class="cta-row">
-      <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser — $99</a>
+      <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser · $99</a>
       <span class="cta-note">One-time purchase.<br>Use in unlimited apps.</span>
     </div>
   </div>
@@ -283,7 +283,7 @@
            poster="hawser-tour-poster.jpg" aria-label="Hawser product tour">
       <source src="hawser-tour.mp4" type="video/mp4">
     </video>
-    <p class="stage-caption">Certificate to notarised DMG — the full run, in order.<br>
+    <p class="stage-caption">The full run from certificate to notarised DMG, in order.<br>
        The log is the tool's own output, word for word.</p>
   </div>
 </div>
@@ -291,13 +291,13 @@
 <section>
   <div class="wrap center">
     <h2>The App Store does five jobs.<br>Out here, they're yours.</h2>
-    <p class="kicker">Sell from your own site and you keep 100% minus payment fees, own your customers, and escape the sandbox. In exchange, Apple hands you this list — and no tooling.</p>
+    <p class="kicker">Sell from your own site and you keep 100% minus payment fees, own your customers, and escape the sandbox. In exchange, Apple hands you this list and no tooling.</p>
     <div class="glass table-card">
       <table class="pain">
         <tr><th>The job</th><th>Handled alone</th><th>With the kit</th></tr>
         <tr><td>Menu bar app shell</td><td class="no">No Xcode template exists; tutorials are outdated, LLMs suggest deprecated APIs</td><td class="yes">Working skeleton, macOS 13+</td></tr>
-        <tr><td>Notarization</td><td class="no">Xcode notarises the <em>app</em>. The DMG you actually ship is a separate submission — and every release repeats the GUI by hand</td><td class="yes">One script, both submissions, signature flags checked before the round-trip</td></tr>
-        <tr><td>DMG packaging</td><td class="no">hdiutil incantations; the DMG itself must be notarized too — most guides skip that</td><td class="yes">Signed, notarized, stapled</td></tr>
+        <tr><td>Notarization</td><td class="no">Xcode notarises the <em>app</em>. The DMG you actually ship is a separate submission, and every release repeats the GUI by hand</td><td class="yes">One script, both submissions, signature flags checked before the round-trip</td></tr>
+        <tr><td>DMG packaging</td><td class="no">hdiutil incantations; the DMG itself must be notarized too, which most guides skip</td><td class="yes">Signed, notarized, stapled</td></tr>
         <tr><td>Auto-updates</td><td class="no">Sparkle setup, EdDSA keys, appcast hosting, three silent failure modes</td><td class="yes">Wired, with delta updates</td></tr>
         <tr><td>License keys</td><td class="no">Verification API, offline handling, refund handling, keychain storage</td><td class="yes">Gumroad flow, 14-day grace</td></tr>
       </table>
@@ -311,9 +311,9 @@
       <h2>What's in the box</h2>
       <ul class="inside-list">
         <li><strong>The Hawser app</strong><span>Unlocks your kit, reads your Developer ID out of the keychain, takes the notary key from a file dialog, and writes the config for you. No text editor required to get shipping.</span></li>
-        <li><strong><code>Config.xcconfig</code></strong><span>The one file you edit. Name, bundle id, team, versions, update feed, product id — everything follows it.</span></li>
+        <li><strong><code>Config.xcconfig</code></strong><span>The one file you edit. Name, bundle id, team, versions, update feed, product id. Everything follows it.</span></li>
         <li><strong><code>ship.sh</code></strong><span>Build → sign → notarize → staple → DMG. Verifies its own signature flags before wasting a round-trip to Apple, and refuses to ship what would silently fail.</span></li>
-        <li><strong><code>appcast.sh</code></strong><span>Generates your signed update feed — and rejects an unsigned one, a failure Sparkle's own tooling lets through without a word.</span></li>
+        <li><strong><code>appcast.sh</code></strong><span>Generates your signed update feed. Rejects an unsigned one, a failure Sparkle's own tooling lets through without a word.</span></li>
         <li><strong>Five guides</strong><span>Written from measured runs, not documentation folklore. The troubleshooting page is real incidents with exact fixes.</span></li>
       </ul>
     </div>
@@ -340,17 +340,17 @@ docs/
     <div class="stats">
       <div class="glass stat"><b>62s</b><span>full pipeline, warm run: from source to distributable, notarized DMG</span></div>
       <div class="glass stat"><b>31m → 40s</b><span>your first-ever notarization vs. every one after. First-run panic, documented away</span></div>
-      <div class="glass stat"><b>2.5 KB</b><span>delta update our test shipped instead of the full 1.1 MB — automatic, zero config</span></div>
+      <div class="glass stat"><b>2.5 KB</b><span>delta update our test shipped instead of the full 1.1 MB. Automatic, zero config</span></div>
       <div class="glass stat"><b>10</b><span>documented traps we hit while building this, each with its exact fix</span></div>
     </div>
-    <p class="measured">Measured 2026 — not projected, not "up to".</p>
+    <p class="measured">Measured 2026, not projected, not "up to".</p>
   </div>
 </section>
 
 <section>
   <div class="wrap center">
     <h2>We fell in the holes so you don't</h2>
-    <p class="kicker">Three of the ten. Any one of these costs a lost afternoon — or worse, ships broken silently.</p>
+    <p class="kicker">Three of the ten. Any one of these costs a lost afternoon, or worse, ships broken silently.</p>
     <div class="traps">
       <div class="glass trap">
         <h3>The default that expires your certificate</h3>
@@ -358,11 +358,11 @@ docs/
       </div>
       <div class="glass trap">
         <h3>The update feed that signs nothing</h3>
-        <p>Add Sparkle after your first release and its own tool generates an <strong>unsigned feed with no warning</strong> — updates then fail silently on every user's machine. <code>appcast.sh</code> verifies the signature and refuses to let it through.</p>
+        <p>Add Sparkle after your first release and its own tool generates an <strong>unsigned feed with no warning</strong>. Updates then fail silently on every user's machine. <code>appcast.sh</code> verifies the signature and refuses to let it through.</p>
       </div>
       <div class="glass trap">
         <h3>The error that names nothing</h3>
-        <p><code>errSecInternalComponent</code> is codesign's way of saying "keychain permissions" — it just never mentions keychains, or permissions. You get the one-line fix in the error message itself, when it happens, not after two hours of searching.</p>
+        <p><code>errSecInternalComponent</code> is codesign's way of saying "keychain permissions". It just never mentions keychains, or permissions. You get the one-line fix in the error message itself, when it happens, not after two hours of searching.</p>
       </div>
     </div>
     <p class="kicker" style="margin-top:26px"><a href="traps.html" style="color:var(--accent)">Read all ten, with the exact fix for each →</a></p>
@@ -377,10 +377,10 @@ docs/
       <ul class="price-points">
         <li>Use in unlimited apps, commercial or free</li>
         <li>No subscription, no per-app fees, no account</li>
-        <li>Full source — readable, commented, yours to modify</li>
+        <li>Full source: readable, commented, yours to modify</li>
       </ul>
-      <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser — $99</a>
-      <p class="price-note">Requires Apple's own Developer Program membership ($99/year, paid to Apple) — everyone shipping Mac apps pays that, kit or not.</p>
+      <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser · $99</a>
+      <p class="price-note">Requires Apple's own Developer Program membership ($99/year, paid to Apple). Everyone shipping Mac apps pays that, kit or not.</p>
     </div>
   </div>
 </section>
@@ -391,11 +391,11 @@ docs/
     <div class="faq">
       <details>
         <summary>What exactly do I get?</summary>
-        <div class="a">The <strong>Hawser app</strong>. Paste the licence key from your receipt and it unpacks your kit — an Xcode project (the menu bar skeleton), <code>ship.sh</code> and <code>appcast.sh</code>, and five guides — then walks you through the certificate and notary setup. Full readable source, no obfuscation. The key is checked once, when you unlock; your copy is stamped with your name and the app never phones home again.</div>
+        <div class="a">The <strong>Hawser app</strong>. Paste the licence key from your receipt and it unpacks your kit: an Xcode project (the menu bar skeleton), <code>ship.sh</code> and <code>appcast.sh</code>, and five guides. Then it walks you through the certificate and notary setup. Full readable source, no obfuscation. The key is checked once, when you unlock; your copy is stamped with your name and the app never phones home again.</div>
       </details>
       <details>
         <summary>What else do I need?</summary>
-        <div class="a">An Apple Developer Program membership ($99/year, paid to Apple — required for Developer ID signing no matter what tooling you use), Xcode 15 or later, and a Gumroad account only if you want license keys.</div>
+        <div class="a">An Apple Developer Program membership ($99/year, paid to Apple, required for Developer ID signing no matter what tooling you use), Xcode 15 or later, and a Gumroad account only if you want license keys.</div>
       </details>
       <details>
         <summary>Which platforms and versions?</summary>
@@ -403,7 +403,7 @@ docs/
       </details>
       <details>
         <summary>Can I use it in client work? In several apps?</summary>
-        <div class="a">Yes — unlimited apps, commercial or free, including apps you build for clients. The only thing you can't do is resell or redistribute the kit itself.</div>
+        <div class="a">Yes. Unlimited apps, commercial or free, including apps you build for clients. The only thing you can't do is resell or redistribute the kit itself.</div>
       </details>
       <details>
         <summary>Do I get updates to the kit?</summary>
@@ -411,16 +411,16 @@ docs/
       </details>
       <details>
         <summary>Can I get a refund?</summary>
-        <div class="a">No — for the honest reason: you receive the complete source the moment you buy, and source code can't be returned. That's exactly why everything is laid out before you pay — the full box contents, measured numbers instead of promises, and this FAQ. If you're unsure, don't buy yet; the page isn't going anywhere.</div>
+        <div class="a">No. You receive the complete source the moment you buy, and source code can't be returned. That's the honest reason, and it's exactly why everything is laid out before you pay: the full box contents, measured numbers instead of promises, and this FAQ. If you're unsure, don't buy yet; the page isn't going anywhere.</div>
       </details>
     </div>
   </div>
 </section>
 
 <footer class="wrap">
-  <div>Built by Yaveez — a studio that ships one-time-purchase Mac &amp; iOS apps.</div>
+  <div>Built by Yaveez, a studio that ships one-time-purchase Mac &amp; iOS apps.</div>
   <div>No watermark · no subscription · no telemetry.</div>
-  <div>Questions before you buy? <a href="mailto:yaveez.dev@gmail.com?subject=Hawser" style="color:var(--accent)">yaveez.dev@gmail.com</a> — a person answers.</div>
+  <div>Questions before you buy? <a href="mailto:yaveez.dev@gmail.com?subject=Hawser" style="color:var(--accent)">yaveez.dev@gmail.com</a>. A person answers.</div>
 </footer>
 
 

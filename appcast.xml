@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="yes"?>
+<!-- Deliberately item-free. The update archive of this app carries the paid kit
+     payload, so publishing it would hand the product to anyone with curl.
+     See traps.html, "The one we found last". Items return here when the
+     unlock key is delivered server-side after a licence check, not before. -->
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Hawser</title>
+        <description>Hawser updates</description>
+        <language>en</language>
+    </channel>
+</rss>

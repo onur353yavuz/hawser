@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0A0C">
-<meta name="description" content="Ten traps we hit shipping a paid Mac app outside the App Store — signing, notarisation, Gatekeeper and Sparkle — each with the exact fix. Eight of them produce no error message.">
+<meta name="description" content="Ten traps we hit shipping a paid Mac app outside the App Store: signing, notarisation, Gatekeeper and Sparkle, each with the exact fix. Eight of them produce no error message.">
 <link rel="canonical" href="https://hawserkit.com/traps.html">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://hawserkit.com/hawser-og.png">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="900">
-<meta property="og:image:alt" content="Hawser — ship your Mac app outside the App Store: signed, notarized, auto-updating, licensed.">
+<meta property="og:image:alt" content="Hawser: ship your Mac app outside the App Store. Signed, notarized, auto-updating, licensed.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Ten traps between a working Mac app and a customer who can open it">
 <meta name="twitter:description" content="Signing, notarisation, Gatekeeper and Sparkle updates. Eight of the ten produce no error message on the machine you're standing at.">
@@ -47,7 +47,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* sıcak ambiyans — ikonun rengiyle aynı aile */
+  /* ambient warmth, same family as the icon */
   .ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
   .ambient i { position: absolute; border-radius: 50%; filter: blur(110px); }
   .ambient .a { width: 720px; height: 720px; top: -300px; left: 50%; transform: translateX(-58%);
@@ -57,7 +57,7 @@
 
   .shell { max-width: 780px; margin: 0 auto; padding: 0 26px; }
 
-  /* ---------- üst çerçeve ---------- */
+  /* ---------- top frame ---------- */
   nav {
     position: sticky; top: 12px; z-index: 10;
     display: flex; align-items: center; gap: 14px;
@@ -87,7 +87,7 @@
   }
   .navbtn:hover { background: rgba(228,162,68,.10); }
 
-  /* ---------- başlık ---------- */
+  /* ---------- heading ---------- */
   .doc-head { padding: 72px 0 8px; }
   .eyebrow {
     font-size: 12.5px; font-weight: 600; letter-spacing: .13em; text-transform: uppercase;
@@ -100,7 +100,7 @@
   }
   .rule { height: 1px; background: var(--hairline); margin: 0 0 34px; }
 
-  /* ---------- gövde ---------- */
+  /* ---------- body ---------- */
   .article p { margin: 0 0 17px; }
   .lead { color: var(--muted); font-size: 19.5px; line-height: 1.55; }
   .article strong, .article b { color: #FFF; font-weight: 650; }
@@ -134,7 +134,7 @@
   .closer { border-top: 1px solid var(--hairline); padding-top: 40px; }
   .closer h2 { font-size: clamp(22px, 2.9vw, 26px); letter-spacing: -.02em; margin: 0 0 20px; }
 
-  /* ---------- alt ---------- */
+  /* ---------- footer ---------- */
   .endcap {
     margin: 54px 0 0; padding: 26px 0 0; border-top: 1px solid var(--hairline);
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
@@ -168,7 +168,7 @@
       </span>
     </a>
     <span class="spacer"></span>
-    <a class="navbtn" href="./">Get Hawser — $99</a>
+    <a class="navbtn" href="./">Get Hawser · $99</a>
   </nav>
 
   <div class="doc-head">
@@ -181,36 +181,36 @@
 
   <p class="lead">We spent July 2026 shipping a paid Mac app outside the App Store: Developer ID signing, notarisation, DMG packaging, Sparkle updates, licence checks. The code was the easy part.</p>
   <p>What follows is every trap that cost us a day or burned a release, in the order you'll meet them. Each one is written symptom-first, because that's how they introduce themselves.</p>
-  <p>Most of them <strong>fail silently</strong>. The build is green, the check passes, and the damage surfaces on a machine you don't own — sometimes months later. That delay is what makes shipping outside the App Store expensive. Not the difficulty.</p>
+  <p>Most of them <strong>fail silently</strong>. The build is green, the check passes, and the damage surfaces on a machine you don't own, sometimes months later. That delay is what makes shipping outside the App Store expensive. Not the difficulty.</p>
 
 <article class="trap-item">
 <h2><span class="n">01</span><span>The default on Apple's certificate page expires your certificate</span></h2>
-<p><b class="lbl">Symptom.</b> None, for up to a year. Then your Developer ID stops working in February 2027 — and the expiry date printed on your certificate says otherwise.</p>
+<p><b class="lbl">Symptom.</b> None, for up to a year. Then your Developer ID stops working in February 2027, and the expiry date printed on your certificate says otherwise.</p>
 <p><b class="lbl">Why.</b> Creating a Developer ID Application certificate involves an intermediary screen where Apple may pre-select <strong>"Previous Sub-CA"</strong>. Certificates issued against that intermediate all die in February 2027 regardless of what your own certificate claims.</p>
 <p><b class="lbl">Fix.</b> On that screen, choose <strong>G2 Sub-CA</strong>. It is one radio button, it is not the default, and nothing later in the process warns you.</p>
-<p>Two related facts worth knowing before you start: only the <strong>Account Holder</strong> of the developer account can create this certificate — if you're on a team and you aren't them, you'll be stuck until they act. And the private key sitting in your keychain is not replaceable; export it as a <code>.p12</code> and store it somewhere safe the day you create it.</p>
+<p>Two related facts worth knowing before you start: only the <strong>Account Holder</strong> of the developer account can create this certificate. If you're on a team and you aren't them, you'll be stuck until they act. And the private key sitting in your keychain is not replaceable; export it as a <code>.p12</code> and store it somewhere safe the day you create it.</p>
 </article>
 <article class="trap-item">
-<h2><span class="n">02</span><span><code>errSecInternalComponent</code> means “keychain permissions”, and says neither word</span></h2>
+<h2><span class="n">02</span><span><code>errSecInternalComponent</code> means "keychain permissions", and says neither word</span></h2>
 <p><b class="lbl">Symptom.</b> <code>codesign</code> fails with <code>errSecInternalComponent</code>. That's the whole message.</p>
 <p><b class="lbl">Why.</b> Your keychain hasn't granted codesign non-interactive access to the signing key. Nothing in the error mentions keychains, permissions, or the key.</p>
 <p><b class="lbl">Fix.</b> Run this once:</p>
 <pre class="code">security set-key-partition-list -S apple-tool:,apple:,codesign: \
   -s ~/Library/Keychains/login.keychain-db</pre>
-<p>It asks for your login password once. Our release script now checks for a usable identity before every run and prints this exact command when it's missing — an error is only useful if it names the fix.</p>
+<p>It asks for your login password once. Our release script now checks for a usable identity before every run and prints this exact command when it's missing. An error is only useful if it names the fix.</p>
 </article>
 <article class="trap-item">
 <h2><span class="n">03</span><span>Xcode ad-hoc signs the binaries inside your SPM packages</span></h2>
 <p><b class="lbl">Symptom.</b> The app runs perfectly on your Mac. Notarisation comes back rejected, with one complaint per nested binary you didn't know existed.</p>
-<p><b class="lbl">Why.</b> Binary frameworks pulled in through Swift Package Manager — Sparkle is the usual suspect, and it brings an Updater, an Autoupdate helper and two XPC services — are embedded with an <em>ad-hoc</em> signature. Signing the outer app does not re-sign what's inside it.</p>
+<p><b class="lbl">Why.</b> Binary frameworks pulled in through Swift Package Manager (Sparkle is the usual suspect, and it brings an Updater, an Autoupdate helper and two XPC services) are embedded with an <em>ad-hoc</em> signature. Signing the outer app does not re-sign what's inside it.</p>
 <p><b class="lbl">Fix.</b> Sign inside-out: nested bundles, then helpers, then frameworks, then the app itself, each with hardened runtime and a timestamp. Then verify before you spend a submission:</p>
 <pre class="code">codesign --verify --deep --strict &quot;MyApp.app&quot;</pre>
-<p>And date your proof. Any embedded component added after a successful round invalidates that round — the next dependency you add is the next rejection.</p>
+<p>And date your proof. Any embedded component added after a successful round invalidates that round. The next dependency you add is the next rejection.</p>
 </article>
 <article class="trap-item">
 <h2><span class="n">04</span><span>The zip you send to Apple is not the zip you ship</span></h2>
-<p><b class="lbl">Symptom.</b> Everything passed. Months later a user says the app won't open — and only some users, seemingly at random.</p>
-<p><b class="lbl">Why.</b> Notarisation takes an archive, and the ticket comes back <em>after</em>. If your release script publishes the archive it built for submission, it publishes the app <strong>without the stapled ticket</strong>. A machine that can reach Apple validates online and opens it fine. A machine that can't — locked-down network, offline install — refuses. Your test machine is almost always the first kind.</p>
+<p><b class="lbl">Symptom.</b> Everything passed. Months later a user says the app won't open, and only some users, seemingly at random.</p>
+<p><b class="lbl">Why.</b> Notarisation takes an archive, and the ticket comes back <em>after</em>. If your release script publishes the archive it built for submission, it publishes the app <strong>without the stapled ticket</strong>. A machine that can reach Apple validates online and opens it fine. A machine that can't (locked-down network, offline install) refuses. Your test machine is almost always the first kind.</p>
 <p><b class="lbl">Fix.</b> Build the distribution archive <em>after</em> stapling, from the stapled app, and make the validation a hard gate rather than a note in the README:</p>
 <pre class="code">xcrun stapler staple &quot;MyApp.app&quot;
 ditto -c -k --keepParent &quot;MyApp.app&quot; &quot;MyApp-1.0.1.zip&quot;   # not zip -r: preserves the bundle
@@ -219,80 +219,80 @@ xcrun stapler validate &quot;MyApp.app&quot; || exit 1</pre>
 <article class="trap-item">
 <h2><span class="n">05</span><span>Sparkle's own tool will hand you an unsigned feed and say nothing</span></h2>
 <p><b class="lbl">Symptom.</b> Updates never install. No error on your side, ever.</p>
-<p><b class="lbl">Why.</b> <code>generate_appcast</code> produces an <strong>unsigned</strong> feed, with no warning, if the app inside your archive was built before the signing key was configured. An unsigned feed is silently rejected by every user's copy of your app. This one specifically bites anyone who ships 1.0 first and adds updates later — which is almost everyone.</p>
-<p><b class="lbl">Fix.</b> Have your publish script assert that <code>edSignature</code> exists on every enclosure after generation, and refuse to publish if it doesn't. Never remove that check because “it's obviously signed”.</p>
+<p><b class="lbl">Why.</b> <code>generate_appcast</code> produces an <strong>unsigned</strong> feed, with no warning, if the app inside your archive was built before the signing key was configured. An unsigned feed is silently rejected by every user's copy of your app. This one specifically bites anyone who ships 1.0 first and adds updates later, which is almost everyone.</p>
+<p><b class="lbl">Fix.</b> Have your publish script assert that <code>edSignature</code> exists on every enclosure after generation, and refuse to publish if it doesn't. Never remove that check because "it's obviously signed".</p>
 </article>
 <article class="trap-item">
 <h2><span class="n">06</span><span>A valid signature is not the same as the right key</span></h2>
 <p><b class="lbl">Symptom.</b> The feed is signed. Your signature check passes. Every user's updater still refuses to install anything.</p>
-<p><b class="lbl">Why.</b> The feed is signed with the private key in your keychain. The app validates with the <code>SUPublicEDKey</code> compiled into it. Nothing in the pipeline compares the two. If they've drifted — a different machine, regenerated keys, a template value nobody replaced — you get a correctly signed feed that no copy of your app will ever accept, and no error anywhere you can see.</p>
+<p><b class="lbl">Why.</b> The feed is signed with the private key in your keychain. The app validates with the <code>SUPublicEDKey</code> compiled into it. Nothing in the pipeline compares the two. If they've drifted (a different machine, regenerated keys, a template value nobody replaced), you get a correctly signed feed that no copy of your app will ever accept, and no error anywhere you can see.</p>
 <p><b class="lbl">Fix.</b> Compare them before signing:</p>
 <pre class="code">KEYCHAIN_PUB=$(generate_keys -p)
 APP_PUB=$(defaults read &quot;MyApp.app/Contents/Info.plist&quot; SUPublicEDKey)
-[[ &quot;$KEYCHAIN_PUB&quot; == &quot;$APP_PUB&quot; ]] || { echo &quot;key mismatch — refusing to sign&quot;; exit 1; }</pre>
+[[ &quot;$KEYCHAIN_PUB&quot; == &quot;$APP_PUB&quot; ]] || { echo &quot;key mismatch, refusing to sign&quot;; exit 1; }</pre>
 </article>
 <article class="trap-item">
 <h2><span class="n">07</span><span>The archive URL comes from wherever the feed lives</span></h2>
 <p><b class="lbl">Symptom.</b> The update appears, the user clicks Install, nothing happens.</p>
 <p><b class="lbl">Why.</b> <code>generate_appcast</code> derives each enclosure URL from the directory containing the feed. Publish the feed at <code>/updates/appcast.xml</code> and the archive at <code>/updates/archives/</code>, and the feed points at a URL that 404s. Sparkle swallows a 404 without telling the user.</p>
-<p><b class="lbl">Fix.</b> Archives go in the same directory as the feed. Have the publish script print the full enclosure URL it just created, so you can click it. We also check that every <code>length=</code> in the feed matches the real file byte-for-byte before publishing — a mismatch is the same silent failure in a different costume.</p>
+<p><b class="lbl">Fix.</b> Archives go in the same directory as the feed. Have the publish script print the full enclosure URL it just created, so you can click it. We also check that every <code>length=</code> in the feed matches the real file byte-for-byte before publishing. A mismatch is the same silent failure in a different costume.</p>
 </article>
 <article class="trap-item">
 <h2><span class="n">08</span><span>A single-architecture build quietly cuts off every Intel user</span></h2>
 <p><b class="lbl">Symptom.</b> Intel users never see updates. They don't get an error; the update simply doesn't exist for them.</p>
 <p><b class="lbl">Why.</b> If your build produces an Apple-Silicon-only binary, <code>generate_appcast</code> marks the update arm64-only, and Sparkle correctly hides it from every Intel Mac. Nobody is notified.</p>
-<p><b class="lbl">Fix.</b> Worth being precise, because we got this wrong at first and had to measure it: a plain <code>xcodebuild build</code> <em>can</em> produce a universal binary — what decides it is where <code>ARCHS</code> and <code>ONLY_ACTIVE_ARCH</code> come from. Passed as command-line overrides without a <code>-destination</code>, you get <code>x86_64 arm64</code>. Left to the scheme's defaults, you get whatever your Mac is.</p>
+<p><b class="lbl">Fix.</b> Worth being precise, because we got this wrong at first and had to measure it: a plain <code>xcodebuild build</code> <em>can</em> produce a universal binary. What decides it is where <code>ARCHS</code> and <code>ONLY_ACTIVE_ARCH</code> come from. Passed as command-line overrides without a <code>-destination</code>, you get <code>x86_64 arm64</code>. Left to the scheme's defaults, you get whatever your Mac is.</p>
 <p>Force it explicitly in the release script and check the result with <code>lipo -archs</code> rather than trusting the settings.</p>
 </article>
 <article class="trap-item">
-<h2><span class="n">09</span><span>Gatekeeper's warning is triggered by whoever downloads the file — not by you</span></h2>
+<h2><span class="n">09</span><span>Gatekeeper's warning is triggered by whoever downloads the file, not by you</span></h2>
 <p><b class="lbl">Symptom.</b> You build a DMG, double-click it, the app opens with no warning, and you conclude your signing is correct. It proves nothing at all.</p>
-<p><b class="lbl">Why.</b> The quarantine flag is written by whatever <em>downloads</em> the file — Safari, Mail, Messages. A DMG you just built on your own machine is born without it, so Gatekeeper never engages. An unsigned app would open just as quietly.</p>
+<p><b class="lbl">Why.</b> The quarantine flag is written by whatever <em>downloads</em> the file: Safari, Mail, Messages. A DMG you just built on your own machine is born without it, so Gatekeeper never engages. An unsigned app would open just as quietly.</p>
 <p><b class="lbl">Fix.</b> Simulate the download before testing. Two details matter, and we burned three attempts learning them:</p>
 <pre class="code">hdiutil detach &quot;/Volumes/MyApp&quot; 2&gt;/dev/null       # stamping a MOUNTED image does nothing
 xattr -w com.apple.quarantine \
   &quot;0081;$(printf &#x27;%x&#x27; &quot;$(date +%s)&quot;);Safari;$(uuidgen)&quot; &quot;MyApp.dmg&quot;</pre>
-<p>Quarantine transfers to the volume at <strong>mount time</strong>, so an image stamped while already mounted hands out clean copies. And drag the app out <strong>in Finder</strong> — <code>cp</code> and <code>ditto</code> do not propagate quarantine; only Finder does.</p>
+<p>Quarantine transfers to the volume at <strong>mount time</strong>, so an image stamped while already mounted hands out clean copies. And drag the app out <strong>in Finder</strong>, because <code>cp</code> and <code>ditto</code> do not propagate quarantine; only Finder does.</p>
 <p>What you should then see on first launch:</p>
 <p><blockquote>“MyApp” is an app downloaded from the Internet. Are you sure you want to open it?<br>Apple checked it for malicious software and none was detected.</blockquote></p>
 <p>That second sentence is what notarisation bought you. If you get “unidentified developer” instead, it didn't work.</p>
 </article>
 <article class="trap-item">
 <h2><span class="n">10</span><span>macOS remembers your approval by signature, so you only get to test it once</span></h2>
-<p><b class="lbl">Symptom.</b> You want to see that first-launch prompt again. You delete the app, empty the Trash, rebuild, re-stamp — and it never comes back.</p>
+<p><b class="lbl">Symptom.</b> You want to see that first-launch prompt again. You delete the app, empty the Trash, rebuild, re-stamp, and it never comes back.</p>
 <p><b class="lbl">Why.</b> The approval is recorded against the code signature, not the path. Deleting copies changes nothing. Worse: rebuilding unchanged source produces a byte-identical binary with the same signature, so macOS still recognises it as the one you already approved.</p>
-<p><b class="lbl">Fix.</b> To see the prompt again you have to change the signature — a real source change or a build-number bump. We keep a list of signatures that have already been through a first launch and have the script refuse to start that test with one of them, because a hollow test looks exactly like a passing one.</p>
+<p><b class="lbl">Fix.</b> To see the prompt again you have to change the signature: a real source change or a build-number bump. We keep a list of signatures that have already been through a first launch and have the script refuse to start that test with one of them, because a hollow test looks exactly like a passing one.</p>
 <p>Useful while rehearsing: <strong>Cancel</strong> does not consume the approval. Only <strong>Open</strong> does.</p>
 </article>
 
   <section class="closer">
     <h2>The one we found last, and it isn't about signing at all</h2>
-    <p>Auto-updates need a feed and an archive that anyone can fetch without credentials. That's how the updater works, and no access control survives it — anything that stops a stranger stops every customer's updater too. So the archive you publish is, by design, downloadable by everyone.</p>
-    <p>Which means <strong>any secret inside that app belongs to everyone who can download it</strong>. If your app carries the thing you're selling — encrypted, along with the key that opens it — the lock is theatre. We proved it against our own release in three commands, a day after publishing it.</p>
+    <p>Auto-updates need a feed and an archive that anyone can fetch without credentials. That's how the updater works, and no access control survives it. Anything that stops a stranger stops every customer's updater too. So the archive you publish is, by design, downloadable by everyone.</p>
+    <p>Which means <strong>any secret inside that app belongs to everyone who can download it</strong>. If your app carries the thing you're selling (encrypted, along with the key that opens it), the lock is theatre. We proved it against our own release in three commands, a day after publishing it.</p>
     <p>There is no client-side fix for this. Either the payload isn't in the app, or the key arrives from a server after a licence check, where it can be rotated and revoked. Anything compiled into the binary is public the moment the binary is.</p>
     <p>We took our update feed down the day we measured it, and it goes back up when the key comes from somewhere we control.</p>
-    <p>The same logic applies to the licence check in whatever <em>you</em> ship. Anything that decides “paid or not” inside the binary can be patched out by someone who wants to; client-side licensing is a speed bump, not a lock. It's worth having — casual copying stops being effortless — but if anyone tells you their scheme is unbreakable on the client, they haven't tried to break it.</p>
+    <p>The same logic applies to the licence check in whatever <em>you</em> ship. Anything that decides "paid or not" inside the binary can be patched out by someone who wants to; client-side licensing is a speed bump, not a lock. It's worth having, since casual copying stops being effortless, but if anyone tells you their scheme is unbreakable on the client, they haven't tried to break it.</p>
   </section>
 
   <section class="closer" style="margin-top:36px">
     <h2>What this cost, in one line</h2>
     <p>Ten traps, eight of which produce no error message on the machine you're standing at. The other two produce one that names nothing.</p>
-    <p>Every fix above is a few lines of shell — none of this is hard once you know it exists. That's the whole problem: you find out from a customer.</p>
-    <p>The scripts we ended up with, with all ten guards wired in, are what we sell as <a href="./">Hawser</a> — $99, one-time. Everything above works without it.</p>
+    <p>Every fix above is a few lines of shell. None of this is hard once you know it exists. That's the whole problem: you find out from a customer.</p>
+    <p>The scripts we ended up with, with all ten guards wired in, are what we sell as <a href="./">Hawser</a>, $99 one-time. Everything above works without it.</p>
   </section>
 
   </div>
 
   <div class="endcap">
     <img src="data:image/png;base64,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" alt="">
-    <span class="t"><b>Hawser</b> — one file to configure, one command to ship.<br>$99, one-time.</span>
+    <span class="t"><b>Hawser</b>: one file to configure, one command to ship.<br>$99, one-time.</span>
     <a class="go" href="./">See what's in it</a>
   </div>
 
   <footer>
-    Built by Yaveez — a studio that ships one-time-purchase Mac &amp; iOS apps.<br>
+    Built by Yaveez, a studio that ships one-time-purchase Mac &amp; iOS apps.<br>
     No watermark · no subscription · no telemetry.<br>
-    Questions? <a href="mailto:yaveez.dev@gmail.com?subject=Hawser" style="color:var(--accent)">yaveez.dev@gmail.com</a> — a person answers.
+    Questions? <a href="mailto:yaveez.dev@gmail.com?subject=Hawser" style="color:var(--accent)">yaveez.dev@gmail.com</a>. A person answers.
   </footer>
 </div>
 
