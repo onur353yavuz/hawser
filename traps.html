@@ -273,7 +273,25 @@ xattr -w com.apple.quarantine \
     <h2>What this cost, in one line</h2>
     <p>Ten traps, eight of which produce no error message on the machine you're standing at. The other two produce one that names nothing.</p>
     <p>Every fix above is a few lines of shell. None of this is hard once you know it exists. That's the whole problem: you find out from a customer.</p>
-    <p>The scripts we ended up with, with all ten guards wired in, are what we sell as <a href="./">Hawser</a>, $99 one-time. Everything above works without it.</p>
+
+    <h2>Knowing the ten is not the same as checking them</h2>
+    <p>You have the list now. Take it, it's yours. But notice what the list actually asks of you: not to solve ten problems once, but to <strong>re-verify ten invariants on every single release, forever</strong>, most of which look identical whether they passed or failed.</p>
+    <p>We know how that goes, because we wrote this list and then shipped a broken build anyway. Our proof run was green in the morning. We added Sparkle in the afternoon, which quietly introduced four unsigned nested binaries, and the next real submission came back Invalid. Having written trap 03 did not save us from trap 03. Only re-running the whole pipeline did.</p>
+    <p>That is the part that does not fit in a blog post, and it's the part we ended up building. <code>ship.sh</code> and <code>appcast.sh</code> refuse to continue at <strong>35 separate points</strong>, and each refusal prints the fix rather than a status code. A sample of what runs on every release, whether or not you remember why:</p>
+<pre class="code"># the entitlement that survives a re-sign and gets you rejected
+codesign -d --entitlements - --xml "$APP" | grep -q 'get-task-allow' &amp;&amp; fail \
+  "get-task-allow still present after signing — notarization would reject this."
+
+# the archive you're about to publish, with no ticket in it
+stapler validate "$INNER" || fail \
+  "$(basename "$archive") contains an app with NO stapled ticket."
+
+# the correctly signed feed that every copy of your app will reject
+[[ "$APP_ED_KEY" == "$EXPECTED_ED_KEY" ]] || fail \
+  "built with a DIFFERENT Sparkle public key than the one signing this feed."</pre>
+    <p>None of these fire on a good day. They exist for version 1.4.2, eight months from now, at one in the morning, when you have long since stopped thinking about February 2027 and Sub-CAs.</p>
+    <p>And they keep moving. macOS 27 is in beta as we write this. Apple has changed the rules of this pipeline before and will again; when that happens, our scripts get updated because we ship our own apps through them. Yours get updated when a customer emails you.</p>
+    <p>That is what <a href="./">Hawser</a> is, and why it costs $99 once rather than nothing: the ten fixes above are free and always will be, the thing that runs them for you is not.</p>
   </section>
 
   </div>

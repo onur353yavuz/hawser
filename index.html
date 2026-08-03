@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0A0C">
-<meta name="description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
+<meta name="description" content="Licence keys, notarised auto-updating DMGs from one command, and 35 checks that stop the release which would have failed silently on a Mac you don't own.">
 <link rel="canonical" href="https://hawserkit.com/">
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Hawser">
 <meta property="og:url" content="https://hawserkit.com/">
 <meta property="og:title" content="Hawser: sell your Mac app outside the App Store">
-<meta property="og:description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
+<meta property="og:description" content="Licence keys, notarised auto-updating DMGs from one command, and 35 checks that stop the release which would have failed silently on a Mac you don't own.">
 <meta property="og:image" content="https://hawserkit.com/hawser-og.png">
 <meta property="og:image:width" content="1600">
 <meta property="og:image:height" content="900">
 <meta property="og:image:alt" content="Hawser: ship your Mac app outside the App Store. Signed, notarized, auto-updating, licensed. $99 one-time.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Hawser: sell your Mac app outside the App Store">
-<meta name="twitter:description" content="Point it at the Mac app you already have and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.">
+<meta name="twitter:description" content="Licence keys, notarised auto-updating DMGs from one command, and 35 checks that stop the release which would have failed silently on a Mac you don't own.">
 <meta name="twitter:image" content="https://hawserkit.com/hawser-og.png">
 <title>Hawser: sell your Mac app outside the App Store</title>
 <style>
@@ -272,11 +272,11 @@
 
   <div class="hero">
     <p class="eyebrow">For Mac developers selling outside the App Store</p>
-    <h1>Everything Apple doesn't do for you. Done.</h1>
-    <p class="sub">Point it at the Mac app you already have, or start from the included skeleton, and get back a notarized, auto-updating, licensed DMG. Every trap already hit for you.</p>
+    <h1>Everything between your Mac app and a paying customer.</h1>
+    <p class="sub">Licence keys that survive a flight and a refund. Signed, notarised, auto-updating DMGs from one command. And 35 checks that stop the release which would have failed silently on a Mac you don't own.</p>
     <div class="cta-row">
       <a class="cta" href="https://yavuzonur.gumroad.com/l/hawser">Get Hawser · $99</a>
-      <span class="cta-note">One-time purchase.<br>Use in unlimited apps.</span>
+      <span class="cta-note">One-time purchase. Unlimited apps.<br>Kept current as Apple moves.</span>
     </div>
   </div>
 
@@ -312,6 +312,7 @@
     <div>
       <h2>What's in the box</h2>
       <ul class="inside-list">
+        <li><strong>The licence layer</strong><span>Gumroad key verification, storage in the Keychain, 14-day offline grace, and defined behaviour for refunds and revoked keys. Everywhere else on this page a mistake costs you an afternoon. Here it costs revenue, and you hear about it months later from the customer it locked out.</span></li>
         <li><strong>The Hawser app</strong><span>Unlocks your kit, reads your Developer ID out of the keychain, takes the notary key from a file dialog, and writes the config for you. No text editor required to get shipping.</span></li>
         <li><strong><code>Config.xcconfig</code></strong><span>The one file you edit. Name, bundle id, team, versions, update feed, product id. Everything follows it.</span></li>
         <li><strong><code>ship.sh</code></strong><span>Build → sign → notarize → staple → DMG. Verifies its own signature flags before wasting a round-trip to Apple, and refuses to ship what would silently fail.</span></li>
@@ -343,7 +344,7 @@ docs/
       <div class="glass stat"><b>62s</b><span>full pipeline, warm run: from source to distributable, notarized DMG</span></div>
       <div class="glass stat"><b>31m → 40s</b><span>your first-ever notarization vs. every one after. First-run panic, documented away</span></div>
       <div class="glass stat"><b>2.5 KB</b><span>delta update our test shipped instead of the full 1.1 MB. Automatic, zero config</span></div>
-      <div class="glass stat"><b>10</b><span>documented traps we hit while building this, each with its exact fix</span></div>
+      <div class="glass stat"><b>35</b><span>points where the scripts refuse to continue, each printing the fix instead of a status code</span></div>
     </div>
     <p class="measured">Measured 2026, not projected, not "up to".</p>
   </div>
@@ -409,7 +410,7 @@ docs/
       </details>
       <details>
         <summary>Do I get updates to the kit?</summary>
-        <div class="a">Yes. Fixes and improvements to v1 are free and delivered through your original download link.</div>
+        <div class="a">Yes. Fixes and improvements to v1 are free and delivered through your original download link. This matters more than it sounds: Apple has changed the rules of this pipeline before and macOS 27 is in beta now. When something moves, our scripts get updated because we ship our own apps through them. A pipeline you assembled yourself gets updated when a customer emails you about it.</div>
       </details>
       <details>
         <summary>Can I get a refund?</summary>
